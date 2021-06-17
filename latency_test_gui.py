@@ -1,7 +1,9 @@
 import tkinter as tk
 import time
 
-# Backbone algorithms for the latency test
+
+# Backbone algorithms for the latency test:
+
 def latency_test():
     cycles = 2650  # This many cycles on M1 Macbook Air returns latency similar to AIDA
 
@@ -48,8 +50,33 @@ def run_latency_test(iterations):
     avg_time = str(total_time/iterations)
     return avg_time
 
-# GUI for the latency test
 
-root = tk.Tk
+# GUI for the latency test:
 
-root.mainloop
+root = tk.Tk()
+
+# resizing window
+canvas = tk.Canvas(root, width = 300, height = 300)
+canvas.grid(columnspan = 4, rowspan = 4)
+
+# title
+title = tk.Label(root, text = "Memory Latency Test\n" + "Please allow 10 seconds for test to complete")
+title.grid(columnspan=3, column=0, row=1)
+
+# what to do when test starts
+def start_test():
+    test_button_text.set("Testing...")
+    result = run_latency_test(10)
+    result = str(result) + 'ns'
+    output_result = tk.Label(root, text = result)
+    output_result.grid(column=0, row = 2)
+    test_button_text.set("Test")
+
+
+# create "Test" button
+test_button_text = tk.StringVar()
+test_button = tk.Button(root, command=lambda:start_test(), textvariable=test_button_text, height=2, width=15)
+test_button_text.set("Test")
+test_button.grid(column=1, row=2)
+
+root.mainloop()
