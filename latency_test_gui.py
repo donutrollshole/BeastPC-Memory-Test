@@ -1,6 +1,7 @@
+from multiprocessing.spawn import freeze_support
 import tkinter as tk
 import time
-
+from multiprocessing import Process
 
 # Backbone algorithms for the latency test:
 
@@ -65,11 +66,11 @@ title.grid(columnspan=3, column=0, row=1)
 
 # what to do when test starts
 def start_test():
-    test_button_text.set("Testing...")
+    #test_button_text.set("Testing...")
     result = run_latency_test(10)
     result = str(result) + 'ns'
     output_result = tk.Label(root, text = result)
-    output_result.grid(column=0, row = 2)
+    output_result.grid(column=1, row = 3)
     test_button_text.set("Test")
 
 
