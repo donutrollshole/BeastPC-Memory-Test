@@ -1,10 +1,12 @@
 import tkinter as tk
 import time
+import threading
+import concurrent.futures
 
 # Backbone algorithms for the latency test:
 
 def latency_test():
-    cycles = 2650  # This many cycles on M1 Macbook Air returns latency similar to AIDA
+    cycles = 2800  # This many cycles on M1 Macbook Air returns latency similar to AIDA
 
     # creating test list of length cycles
     test_list = []
@@ -64,12 +66,17 @@ title.grid(columnspan=3, column=0, row=1)
 
 # what to do when test starts
 def start_test():
-    #test_button_text.set("Testing...")
-    result = run_latency_test(10)
+    # create new thread for latency test for maximum performance
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        future = executor.submit(run_latency_test, 10)
+        result = future.result()
+
+    #result = run_latency_test(10)  # deprecated
+
+    #formatting test result and printing it on screen
     result = str(result) + 'ns'
     output_result = tk.Label(root, text = result)
     output_result.grid(column=1, row = 3)
-    test_button_text.set("Test")
 
 
 # create "Test" button
