@@ -1,7 +1,5 @@
-from multiprocessing.spawn import freeze_support
 import tkinter as tk
 import time
-from multiprocessing import Process
 
 # Backbone algorithms for the latency test:
 
